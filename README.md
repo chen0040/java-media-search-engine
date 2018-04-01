@@ -1,4 +1,4 @@
-# java-tensorflow-image-classifier
+# java-media-search-engine
 
 Media search engines built implemented in Java using Tensorflow
 
