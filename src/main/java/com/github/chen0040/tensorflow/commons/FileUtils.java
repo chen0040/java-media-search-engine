@@ -6,13 +6,17 @@ import java.util.List;
 
 public class FileUtils {
     public static List<String> getAudioFilePaths() {
+        return getAudioFilePaths("music_samples", ".au");
+    }
+
+    public static List<String> getAudioFilePaths(String dirPath, String extension) {
         List<String> result = new ArrayList<>();
-        File dir = new File("music_samples");
+        File dir = new File(dirPath, extension);
         System.out.println(dir.getAbsolutePath());
         if (dir.isDirectory()) {
             for (File f : dir.listFiles()) {
                 String file_path = f.getAbsolutePath();
-                if (file_path.endsWith("au")) {
+                if (file_path.toLowerCase().endsWith(extension)) {
                     result.add(file_path);
                 }
             }
@@ -20,6 +24,7 @@ public class FileUtils {
 
         return result;
     }
+
 
     public static File[] getAudioFiles() {
         List<File> result = new ArrayList<>();
@@ -42,11 +47,15 @@ public class FileUtils {
     }
 
     public static File[] getImageFiles() {
+        return getImageFiles("image_samples", ".png");
+    }
+
+    public static File[] getImageFiles(String dirPath, String extension) {
         List<File> result = new ArrayList<>();
-        File dir = new File("image_samples");
+        File dir = new File(dirPath);
         System.out.println(dir.getAbsolutePath());
 
-        getImageFiles(dir, result);
+        getImageFiles(dir, result, extension);
 
         File[] files = new File[result.size()];
         for(int i=0; i < files.length;++i) {
@@ -55,14 +64,14 @@ public class FileUtils {
         return files;
     }
 
-    private static void getImageFiles(File dir, List<File> result) {
+    private static void getImageFiles(File dir, List<File> result, String extension) {
         if (dir.isDirectory()) {
             for (File f : dir.listFiles()) {
                 if(f.isDirectory()){
-                    getImageFiles(f, result);
+                    getImageFiles(f, result, extension);
                 } else {
                     String file_path = f.getAbsolutePath();
-                    if (file_path.endsWith(".png")) {
+                    if (file_path.endsWith(extension)) {
                         result.add(f);
                     }
                 }
@@ -71,11 +80,16 @@ public class FileUtils {
     }
 
     public static List<String> getImageFilePaths() {
+        return getImageFilePaths("image_samples", ".png");
+    }
+
+    public static List<String> getImageFilePaths(String dirPath, String extension) {
         List<String> result = new ArrayList<>();
-        File[] files = getImageFiles();
+        File[] files = getImageFiles(dirPath, extension);
         for(File f : files) {
             result.add(f.getAbsolutePath());
         }
         return result;
     }
+
 }

@@ -12,14 +12,14 @@ public class ImageSearchEngineDemo {
     public static void main(String[] args) {
         ImageSearchEngine searchEngine = new ImageSearchEngineInception();
         if(!searchEngine.loadIndexDbIfExists()) {
-            searchEngine.indexAll(FileUtils.getImageFiles());
+            searchEngine.indexAll(FileUtils.getImageFiles("image_samples", ".png"));
             searchEngine.saveIndexDb();
         }
 
         int pageIndex = 0;
         int pageSize = 20;
         boolean skipPerfectMatch = true;
-        for(File f : FileUtils.getImageFiles()) {
+        for(File f : FileUtils.getImageFiles("image_samples", ".png")) {
             System.out.println("querying similar music to " + f.getName());
             List<ImageSearchEntry> result = searchEngine.query(f, pageIndex, pageSize, skipPerfectMatch);
             for(int i=0; i < result.size(); ++i){
